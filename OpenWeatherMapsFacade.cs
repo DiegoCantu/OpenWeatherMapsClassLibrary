@@ -13,7 +13,7 @@ namespace OpenWeatherMapsClassLibrary
         Coordinated = 1,
     }
 
-    public class OpenWeatherMapsFacade
+    public class OpenWeatherMapsFacade : IOpenWeatherMapsFacade
     {
         private OpenWeatherMaps openWeatherMaps;
         public OpenWeatherMapsFacade()
