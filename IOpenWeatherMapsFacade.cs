@@ -2,8 +2,8 @@
 {
     interface IOpenWeatherMapsFacade
     {
-         void GetWeatherDataBy(string country, string city);
+        string GetWeatherDataBy(string country, string city);
 
-         void GetWeatherDataBy(decimal latitude, decimal longitude);
+        string GetWeatherDataBy(decimal latitude, decimal longitude);
     }
 }

@@ -21,14 +21,14 @@ namespace OpenWeatherMapsClassLibrary
             openWeatherMaps = new OpenWeatherMaps();
         }
 
-        public void GetWeatherDataBy(string country, string city)
+        public string GetWeatherDataBy(string country, string city)
         {
-            openWeatherMaps.GetWeatherDataBy(RequestType.Place, country + "," + city);
+            return openWeatherMaps.GetWeatherDataBy(RequestType.Place, country + "," + city);
         }
 
-        public void GetWeatherDataBy(decimal latitude, decimal longitude)
+        public string GetWeatherDataBy(decimal latitude, decimal longitude)
         {
-            openWeatherMaps.GetWeatherDataBy(RequestType.Coordinated, latitude + "," + longitude);
+            return openWeatherMaps.GetWeatherDataBy(RequestType.Coordinated, latitude + "," + longitude);
         }
     }
 
@@ -45,12 +45,12 @@ namespace OpenWeatherMapsClassLibrary
             urlParameters.Add(RequestType.Coordinated, "lat={0}&lon={1}");
         }
 
-        public void GetWeatherDataBy(RequestType requestType, string location)
+        public string GetWeatherDataBy(RequestType requestType, string location)
         {
             string parameters = urlParameters.Where(url => url.Key == requestType)
                              .Select(url => string.Format(url.Value, location.Split(',')[0], location.Split(',')[1]))
                              .FirstOrDefault();
-            infrastructure.SendRequest(parameters);
+            return infrastructure.SendRequest(parameters);
         }
     }
 
@@ -65,7 +65,7 @@ namespace OpenWeatherMapsClassLibrary
             url = new OpenWeatherMapsConfig().Url;
         }
 
-        public void SendRequest(string parameters)
+        public string SendRequest(string parameters)
         {
             try
             {
@@ -73,14 +73,12 @@ namespace OpenWeatherMapsClassLibrary
                 using (HttpWebResponse response = apiRequest.GetResponse() as HttpWebResponse)
                 {
                     StreamReader reader = new StreamReader(response.GetResponseStream());
-                    Console.WriteLine(reader.ReadToEnd());
-                    Console.ReadLine();
+                    return reader.ReadToEnd();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", ex.Message);
+               return ex.Message;
             }
         }
     }
